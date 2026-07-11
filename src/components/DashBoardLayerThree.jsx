@@ -2,29 +2,37 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "../assets/css/staffdasoard.css";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getStaffData } from "../redux/slices/registrationNo";
 import baseURL from "../utils/baseUrl";
 
 const DASHBOARD_CARDS = [
   {
-    slug: "dues-fees",
-    label: "Dues fees",
-    icon: "solar:wallet-money-bold-duotone",
+    slug: "my-attendance",
+    label: "My Attendance",
+    icon: "solar:user-check-rounded-bold-duotone",
     accent: "emerald",
-    stat: "₹800",
-    statHint: "Total due amount",
-  },
-  {
-    slug: "attendance",
-    label: "Attendance",
-    icon: "solar:clipboard-check-bold-duotone",
-    accent: "sky",
-    stat: "92%",
+    stat: "95%",
     statHint: "Present this month",
   },
   {
-    slug: "student-diary",
+    slug: "staff-attendance",
+    label: "Staff Attendance",
+    icon: "solar:users-group-rounded-bold-duotone",
+    accent: "emerald",
+    stat: "48",
+    statHint: "Marked today",
+  },
+  {
+    slug: "student-attendance",
+    label: "Student Attendance",
+    icon: "solar:clipboard-check-bold-duotone",
+    accent: "sky",
+    stat: "92%",
+    statHint: "Class average",
+  },
+  {
+    slug: "diary",
     label: "Diary",
     icon: "solar:notebook-bookmark-bold-duotone",
     accent: "rose",
@@ -48,6 +56,14 @@ const DASHBOARD_CARDS = [
     statHint: "Periods today",
   },
   {
+    slug: "fee-report",
+    label: "Fee Report",
+    icon: "solar:wallet-money-bold-duotone",
+    accent: "amber",
+    stat: "₹2.4L",
+    statHint: "Collected this month",
+  },
+  {
     slug: "assignment",
     label: "Assignment",
     icon: "solar:document-text-bold-duotone",
@@ -64,20 +80,20 @@ const DASHBOARD_CARDS = [
     statHint: "Subject notes",
   },
   {
-    slug: "event",
-    label: "Event",
-    icon: "solar:calendar-date-bold-duotone",
+    slug: "student-list",
+    label: "Student List",
+    icon: "solar:users-group-two-rounded-bold-duotone",
     accent: "orange",
-    stat: "3",
-    statHint: "Upcoming events",
+    stat: "240",
+    statHint: "Total students",
   },
   {
-    slug: "holiday",
-    label: "Holiday",
-    icon: "solar:calendar-minimalistic-bold-duotone",
+    slug: "syllabus-trackin",
+    label: "Syllabus Tracking",
+    icon: "solar:checklist-bold-duotone",
     accent: "teal",
-    stat: "15",
-    statHint: "Days this term",
+    stat: "68%",
+    statHint: "Syllabus completed",
   },
   {
     slug: "about-school",
@@ -105,70 +121,53 @@ const DASHBOARD_CARDS = [
   },
 ];
 
-const getStudentFullName = (student) => {
-  if (!student) return "Student";
-  const parts = [student.first_name, student.last_name].filter(Boolean);
+const getStaffFullName = (staff) => {
+  if (!staff) return "Staff Member";
+  const parts = [
+    staff.surname,
+    staff.firstname || staff.first_name,
+    staff.lastname || staff.last_name,
+  ].filter(Boolean);
   if (parts.length) return parts.join(" ");
-  return student.name || "Student";
+  return staff.name || staff.staff_name || "Staff Member";
 };
 
-const getStudentPhotoUrl = (student) => {
-  if (!student) return null;
+const getStaffPhotoUrl = (staff) => {
+  if (!staff) return null;
   const raw =
-    student.profile_image ||
-    student.profileImage ||
-    student.image ||
-    student.photo ||
-    student.avatar;
+    staff.profile_image ||
+    staff.profileImage ||
+    staff.image ||
+    staff.photo ||
+    staff.avatar;
   if (!raw) return null;
   if (raw.startsWith("http")) return raw;
   return `${baseURL}${raw.startsWith("/") ? "" : "/"}${raw}`;
 };
 
-const DashBoardLayerTwo = () => {
-  const regNoFromStore = useSelector((state) => state.registrationNo?.reg_no);
-  const [student, setStudent] = useState(null);
-  const [studentLoading, setStudentLoading] = useState(true);
+const DashBoardLayerThree = () => {
+  const dispatch = useDispatch();
+  const staff = useSelector((state) => state.registrationNo.staff?.data);
+  const staffLoading = useSelector(
+    (state) => state.registrationNo.staffLoading
+  );
   const [photoError, setPhotoError] = useState(false);
 
-  const regNo = regNoFromStore || localStorage.getItem("reg_no");
-  const fullName = getStudentFullName(student);
-  const photoUrl = getStudentPhotoUrl(student);
-  const studentClass = student?.class || "—";
-  const division = student?.division || "—";
-  const email = student?.email || "—";
-  const mobile = student?.contact_number || student?.mobile || "—";
-  const fatherName = student?.father_name || "—";
+  const fullName = getStaffFullName(staff);
+  const photoUrl = getStaffPhotoUrl(staff);
+  const designation = staff?.designation || "—";
+  const department = staff?.department || "—";
+  const email = staff?.email || "—";
+  const mobile =
+    staff?.mobile_number || staff?.mobile || staff?.contact_number || "—";
+  const staffId = staff?.id || staff?.staff_id || staff?.reg_no || "—";
 
   useEffect(() => {
-    const fetchStudentData = async () => {
-      if (!regNo) {
-        setStudentLoading(false);
-        return;
-      }
-
-      setStudentLoading(true);
-      try {
-        const { data } = await axios.get(
-          `${baseURL}/api/personal-information/reg_no/${regNo}`
-        );
-        setStudent(data?.data ?? null);
-      } catch {
-        try {
-          const { data } = await axios.get(
-            `${baseURL}/api/parmanent-personal-information/reg/${regNo}`
-          );
-          setStudent(data?.data ?? data ?? null);
-        } catch {
-          setStudent(null);
-        }
-      } finally {
-        setStudentLoading(false);
-      }
-    };
-
-    fetchStudentData();
-  }, [regNo]);
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(getStaffData({ token }));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     setPhotoError(false);
@@ -176,23 +175,19 @@ const DashBoardLayerTwo = () => {
 
   return (
     <section className="staff-dashboard">
-      <div
-        className={`sd-profile${studentLoading ? " sd-profile--loading" : ""}`}
-      >
+      <div className={`sd-profile${staffLoading ? " sd-profile--loading" : ""}`}>
         <div className="sd-profile__info">
           <p className="sd-profile__greeting">Welcome back</p>
           <h2 className="sd-profile__name">{fullName}</h2>
-          <p className="sd-profile__designation">
-            Class {studentClass} - {division}
-          </p>
+          <p className="sd-profile__designation">{designation}</p>
           <div className="sd-profile__details">
             <p className="sd-profile__detail">
-              <Icon icon="solar:user-id-bold-duotone" aria-hidden />
-              Reg No: {regNo || "—"}
+              <Icon icon="solar:buildings-2-bold-duotone" aria-hidden />
+              {department}
             </p>
             <p className="sd-profile__detail">
-              <Icon icon="solar:user-rounded-bold-duotone" aria-hidden />
-              Father: {fatherName}
+              <Icon icon="solar:user-id-bold-duotone" aria-hidden />
+              ID: {staffId}
             </p>
             <p className="sd-profile__detail">
               <Icon icon="solar:letter-bold-duotone" aria-hidden />
@@ -255,4 +250,4 @@ const DashBoardLayerTwo = () => {
   );
 };
 
-export default DashBoardLayerTwo;
+export default DashBoardLayerThree;

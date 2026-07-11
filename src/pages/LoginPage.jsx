@@ -235,7 +235,7 @@ const LoginPage = () => {
                       });
                       let token=res?.data?.token;
                       localStorage.setItem('token',token)
-                      navigate('/dashboard');
+                      navigate('/staffdashboard');
                       console.log('staff is login successfully', res?.data?.data);
                     }
                   } catch (err) {

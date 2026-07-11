@@ -1045,3 +1045,219 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* =====================================================================
+ * Staff dashboard aligned report styling
+ * ===================================================================== */
+.staff-dashboard .chfi-wrapper .chfi-card,
+.staff-dashboard .fee-report-scope .fee-report-card,
+.staff-dashboard .fee-report-scope .fee-report-table-card {
+  border-radius: var(--sd-radius-sm, 16px);
+  border: 1px solid var(--sd-border, rgba(60, 60, 67, 0.12)) !important;
+  background: linear-gradient(160deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow:
+    0 4px 16px rgba(15, 23, 42, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  position: relative;
+  overflow: hidden;
+}
+
+.staff-dashboard .chfi-wrapper .chfi-card::before,
+.staff-dashboard .fee-report-scope .fee-report-card::before,
+.staff-dashboard .fee-report-scope .fee-report-table-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #007aff, #5ac8fa);
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.staff-dashboard .chfi-wrapper .chfi-card .card-header,
+.staff-dashboard .fee-report-scope .fee-report-card > .card-header,
+.staff-dashboard .fee-report-scope .fee-report-table-card > .card-header {
+  background: transparent !important;
+  color: var(--sd-text, #111114) !important;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.08) !important;
+  padding: 16px 18px 12px !important;
+  position: relative;
+  z-index: 2;
+}
+
+.staff-dashboard .chfi-wrapper .chfi-card .card-header .header-row,
+.staff-dashboard .chfi-wrapper .report-header-row {
+  gap: 12px;
+}
+
+.staff-dashboard .chfi-wrapper .chfi-card .card-header .header-icon,
+.staff-dashboard .fee-report-scope .fee-report-icon-wrap {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 13px !important;
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%) !important;
+  color: #0369a1 !important;
+  box-shadow: 0 6px 16px rgba(2, 132, 199, 0.22);
+}
+
+.staff-dashboard .chfi-wrapper .chfi-card .card-header .card-title,
+.staff-dashboard .fee-report-scope .fee-report-card > .card-header .card-title,
+.staff-dashboard .fee-report-scope .fee-report-table-card > .card-header .card-title {
+  color: var(--sd-text, #111114) !important;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.staff-dashboard .chfi-wrapper .chfi-card .card-body,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body,
+.staff-dashboard .fee-report-scope .fee-report-table-card .card-body {
+  background: transparent !important;
+  padding: 16px 18px 18px !important;
+  position: relative;
+  z-index: 2;
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-grid {
+  gap: 14px;
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .form-label,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-label {
+  color: var(--sd-text, #111114) !important;
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .form-label .label-dot {
+  background: #007aff;
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .icon {
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  color: #0369a1;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.16);
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .form-control,
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .form-select,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-control,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-select {
+  border-radius: 12px !important;
+  border: 1px solid rgba(60, 60, 67, 0.14) !important;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--sd-text, #111114);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .form-control:hover,
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .form-select:hover,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-control:hover,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-select:hover {
+  border-color: rgba(0, 122, 255, 0.32) !important;
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .form-control:focus,
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field .form-select:focus,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-control:focus,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .form-select:focus {
+  border-color: #007aff !important;
+  box-shadow:
+    0 0 0 4px rgba(0, 122, 255, 0.12) !important,
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-field .icon-field:focus-within .icon {
+  background: linear-gradient(135deg, #007aff 0%, #5ac8fa 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.22);
+}
+
+.staff-dashboard .chfi-wrapper .report-filter-action .btn-submit,
+.staff-dashboard .fee-report-scope .fee-report-card .card-body .btn-success {
+  border-radius: 12px !important;
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%) !important;
+  box-shadow: 0 8px 18px rgba(16, 185, 129, 0.18) !important;
+}
+
+.staff-dashboard .chfi-wrapper .export-btn,
+.staff-dashboard .fee-report-scope .fee-report-table-card .fee-report-export-group .btn {
+  color: #0369a1 !important;
+  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%) !important;
+  border-color: rgba(14, 165, 233, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12);
+}
+
+.staff-dashboard .chfi-wrapper .export-btn:hover:not(:disabled),
+.staff-dashboard .fee-report-scope .fee-report-table-card .fee-report-export-group .btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%) !important;
+  border-color: rgba(14, 165, 233, 0.32) !important;
+}
+
+.staff-dashboard .chfi-wrapper .report-table-wrap,
+.staff-dashboard .fee-report-scope .fee-report-table-card .table-responsive {
+  border: 1px solid rgba(60, 60, 67, 0.1) !important;
+  border-radius: 14px !important;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.staff-dashboard .chfi-wrapper .report-table,
+.staff-dashboard .fee-report-scope .table,
+.staff-dashboard .fee-report-scope .bordered-table {
+  color: var(--sd-text, #111114);
+}
+
+.staff-dashboard .chfi-wrapper .report-table thead th,
+.staff-dashboard .fee-report-scope .table thead th,
+.staff-dashboard .fee-report-scope .bordered-table thead th {
+  background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%) !important;
+  color: var(--sd-text, #111114) !important;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.12) !important;
+}
+
+.staff-dashboard .chfi-wrapper .report-table tbody td,
+.staff-dashboard .fee-report-scope .table tbody td,
+.staff-dashboard .fee-report-scope .bordered-table tbody td {
+  color: var(--sd-text, #111114);
+  border-bottom-color: rgba(60, 60, 67, 0.08) !important;
+}
+
+.staff-dashboard .chfi-wrapper .report-table tbody tr:nth-child(odd) td,
+.staff-dashboard .fee-report-scope .table tbody tr:nth-child(odd) td,
+.staff-dashboard .fee-report-scope .bordered-table tbody tr:nth-child(odd) td {
+  background: rgba(248, 250, 252, 0.72);
+}
+
+.staff-dashboard .chfi-wrapper .report-table tbody tr:hover td,
+.staff-dashboard .fee-report-scope .table tbody tr:hover td,
+.staff-dashboard .fee-report-scope .bordered-table tbody tr:hover td {
+  background: rgba(0, 122, 255, 0.06);
+}
+
+.staff-dashboard .chfi-wrapper .dataTables_filter input,
+.staff-dashboard .chfi-wrapper .dataTables_length select,
+.staff-dashboard .chfi-wrapper .dt-search input,
+.staff-dashboard .chfi-wrapper .dt-length select,
+.staff-dashboard .fee-report-scope .dataTables_filter input,
+.staff-dashboard .fee-report-scope .dataTables_length select,
+.staff-dashboard .fee-report-scope .dt-search input,
+.staff-dashboard .fee-report-scope .dt-length select {
+  border-radius: 12px;
+  border-color: rgba(60, 60, 67, 0.14);
+  background: #ffffff;
+}
+
+.staff-dashboard .chfi-wrapper .dataTables_paginate .paginate_button.current,
+.staff-dashboard .chfi-wrapper .dataTables_paginate .paginate_button.current:hover,
+.staff-dashboard .chfi-wrapper .dt-paging .dt-paging-button.current,
+.staff-dashboard .chfi-wrapper .dt-paging .dt-paging-button.current:hover,
+.staff-dashboard .fee-report-scope .dataTables_paginate .paginate_button.current,
+.staff-dashboard .fee-report-scope .dataTables_paginate .paginate_button.current:hover,
+.staff-dashboard .fee-report-scope .dt-paging .dt-paging-button.current,
+.staff-dashboard .fee-report-scope .dt-paging .dt-paging-button.current:hover {
+  background: linear-gradient(135deg, #007aff, #5ac8fa) !important;
+  box-shadow: 0 6px 14px rgba(0, 122, 255, 0.18);
+}
