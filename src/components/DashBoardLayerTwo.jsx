@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "../assets/css/staffdasoard.css";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
 import axios from "axios";
 import baseURL from "../utils/baseUrl";
 
@@ -126,18 +126,16 @@ const getStudentPhotoUrl = (student) => {
 };
 
 const DashBoardLayerTwo = () => {
-  const regNoFromStore = useSelector((state) => state.registrationNo?.reg_no);
+ 
   const [student, setStudent] = useState(null);
   const [studentLoading, setStudentLoading] = useState(true);
   const [photoError, setPhotoError] = useState(false);
 
-  const regNo = regNoFromStore || localStorage.getItem("reg_no");
+  const regNo =localStorage.getItem("reg_no");
   const fullName = getStudentFullName(student);
   const photoUrl = getStudentPhotoUrl(student);
   const studentClass = student?.class || "—";
   const division = student?.division || "—";
-  const email = student?.email || "—";
-  const mobile = student?.contact_number || student?.mobile || "—";
   const fatherName = student?.father_name || "—";
 
   useEffect(() => {
@@ -150,18 +148,11 @@ const DashBoardLayerTwo = () => {
       setStudentLoading(true);
       try {
         const { data } = await axios.get(
-          `${baseURL}/api/personal-information/reg_no/${regNo}`
+          `${baseURL}/api/parmanent-personal-information/reg/${regNo}`
         );
-        setStudent(data?.data ?? null);
+        setStudent(data?.data ?? data ?? null);
       } catch {
-        try {
-          const { data } = await axios.get(
-            `${baseURL}/api/parmanent-personal-information/reg/${regNo}`
-          );
-          setStudent(data?.data ?? data ?? null);
-        } catch {
-          setStudent(null);
-        }
+        setStudent(null);
       } finally {
         setStudentLoading(false);
       }
@@ -193,14 +184,6 @@ const DashBoardLayerTwo = () => {
             <p className="sd-profile__detail">
               <Icon icon="solar:user-rounded-bold-duotone" aria-hidden />
               Father: {fatherName}
-            </p>
-            <p className="sd-profile__detail">
-              <Icon icon="solar:letter-bold-duotone" aria-hidden />
-              {email}
-            </p>
-            <p className="sd-profile__detail">
-              <Icon icon="solar:phone-bold-duotone" aria-hidden />
-              {mobile}
             </p>
           </div>
         </div>

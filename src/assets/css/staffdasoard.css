@@ -50,18 +50,6 @@
   opacity: 0.9;
 }
 
-.sd-profile::after {
-  content: "";
-  position: absolute;
-  top: -40px;
-  right: -40px;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: rgba(0, 122, 255, 0.1);
-  pointer-events: none;
-}
-
 .sd-profile__info {
   flex: 1;
   min-width: 0;
@@ -166,6 +154,8 @@
   flex-shrink: 0;
   width: 110px;
   height: 110px;
+  padding: 0;
+  margin: 0;
   border-radius: 50%;
   overflow: hidden;
   border: 4px solid #ffffff;
@@ -175,6 +165,38 @@
     0 8px 22px rgba(0, 122, 255, 0.22);
   position: relative;
   z-index: 1;
+}
+
+.sd-profile__avatar-wrap--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sd-profile__avatar-wrap--empty:active {
+  transform: scale(0.97);
+}
+
+.sd-profile__view-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.4rem;
+  color: #007aff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.sd-profile__view-photo svg {
+  font-size: 1.35rem;
 }
 
 .sd-profile__avatar {
@@ -743,6 +765,78 @@
 }
 
 @media (max-width: 575.98px) {
+  .sd-profile {
+    gap: 0.75rem;
+    padding: 0.85rem 0.9rem 0.8rem;
+    margin-bottom: 1.1rem;
+    border-radius: 16px;
+  }
+
+  .sd-profile::before {
+    height: 3px;
+  }
+
+  .sd-profile__greeting {
+    font-size: 0.7rem;
+    padding: 0.18rem 0.5rem;
+    margin: 0 0 0.35rem;
+  }
+
+  .sd-profile__name {
+    font-size: 1.2rem;
+    margin: 0 0 0.25rem;
+    line-height: 1.15;
+  }
+
+  .sd-profile__designation {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.5rem;
+    margin: 0 0 0.5rem;
+    border-radius: 8px;
+  }
+
+  .sd-profile__details {
+    gap: 0.3rem;
+  }
+
+  .sd-profile__detail {
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .sd-profile__detail svg {
+    width: 1.55rem;
+    height: 1.55rem;
+    padding: 0.28rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 6px rgba(0, 122, 255, 0.12);
+  }
+
+  .sd-profile__avatar-wrap {
+    width: 64px;
+    height: 64px;
+    border-width: 2px;
+    box-shadow:
+      0 0 0 2px rgba(0, 122, 255, 0.15),
+      0 4px 12px rgba(0, 122, 255, 0.18);
+  }
+
+  .sd-profile__avatar-icon {
+    font-size: 2.25rem;
+  }
+
+  .sd-profile__view-photo {
+    font-size: 0.58rem;
+    gap: 0.1rem;
+    padding: 0.25rem;
+  }
+
+  .sd-profile__view-photo svg {
+    font-size: 1rem;
+  }
+
   .sd-mode-grid {
     gap: 0.55rem;
   }

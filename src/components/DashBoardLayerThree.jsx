@@ -135,6 +135,7 @@ const getStaffFullName = (staff) => {
 const getStaffPhotoUrl = (staff) => {
   if (!staff) return null;
   const raw =
+    staff.staff_photo ||
     staff.profile_image ||
     staff.profileImage ||
     staff.image ||
@@ -152,15 +153,14 @@ const DashBoardLayerThree = () => {
     (state) => state.registrationNo.staffLoading
   );
   const [photoError, setPhotoError] = useState(false);
+  const [photoVisible, setPhotoVisible] = useState(false);
 
   const fullName = getStaffFullName(staff);
   const photoUrl = getStaffPhotoUrl(staff);
-  const designation = staff?.designation || "—";
-  const department = staff?.department || "—";
-  const email = staff?.email || "—";
-  const mobile =
-    staff?.mobile_number || staff?.mobile || staff?.contact_number || "—";
-  const staffId = staff?.id || staff?.staff_id || staff?.reg_no || "—";
+  const designation =
+    staff?.designationInfo?.designation_name || staff?.designation || "—";
+  const department =
+    staff?.departmentInfo?.department_name || staff?.department || "—";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -171,6 +171,7 @@ const DashBoardLayerThree = () => {
 
   useEffect(() => {
     setPhotoError(false);
+    setPhotoVisible(false);
   }, [photoUrl]);
 
   return (
@@ -185,33 +186,46 @@ const DashBoardLayerThree = () => {
               <Icon icon="solar:buildings-2-bold-duotone" aria-hidden />
               {department}
             </p>
-            <p className="sd-profile__detail">
-              <Icon icon="solar:user-id-bold-duotone" aria-hidden />
-              ID: {staffId}
-            </p>
-            <p className="sd-profile__detail">
-              <Icon icon="solar:letter-bold-duotone" aria-hidden />
-              {email}
-            </p>
-            <p className="sd-profile__detail">
-              <Icon icon="solar:phone-bold-duotone" aria-hidden />
-              {mobile}
-            </p>
           </div>
         </div>
 
-        <div className="sd-profile__avatar-wrap">
-          {photoUrl && !photoError ? (
-            <img
-              src={photoUrl}
-              alt={fullName}
-              className="sd-profile__avatar"
-              onError={() => setPhotoError(true)}
-            />
+        {photoUrl && !photoError ? (
+          photoVisible ? (
+            <div
+              className="sd-profile__avatar-wrap"
+              aria-label={`${fullName} profile`}
+            >
+              <img
+                src={photoUrl}
+                alt={fullName}
+                className="sd-profile__avatar"
+                onError={() => {
+                  setPhotoError(true);
+                  setPhotoVisible(false);
+                }}
+              />
+            </div>
           ) : (
+            <button
+              type="button"
+              className="sd-profile__avatar-wrap sd-profile__avatar-wrap--empty"
+              onClick={() => setPhotoVisible(true)}
+              aria-label="View photo"
+            >
+              <span className="sd-profile__view-photo">
+                <Icon icon="solar:eye-bold-duotone" aria-hidden />
+                View photo
+              </span>
+            </button>
+          )
+        ) : (
+          <div
+            className="sd-profile__avatar-wrap"
+            aria-label={`${fullName} profile`}
+          >
             <div
               className="sd-profile__avatar sd-profile__avatar--placeholder"
-              aria-label={`${fullName} profile`}
+              aria-hidden
             >
               <Icon
                 icon="solar:user-circle-bold-duotone"
@@ -219,8 +233,8 @@ const DashBoardLayerThree = () => {
                 aria-hidden
               />
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <h3 className="sd-section-title">Quick Access</h3>
