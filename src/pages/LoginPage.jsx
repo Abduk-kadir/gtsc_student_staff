@@ -43,6 +43,7 @@ const LoginPage = () => {
     const token = searchParams.get('fcmToken') || fcmToken;
     const userRole = searchParams.get('userRole');
     const reg_no = searchParams.get('reg_no')
+    const action=searchParams.get('action')
     if (!email || !password || !userRole) return;
 
     const forceLogin = async () => {
@@ -90,7 +91,23 @@ const LoginPage = () => {
       
     }
     else{
+      if(action=='logout'){
+        if(userRole=='Parent'){
+         axios.post(`${baseUrl}/api/parmanent-personal-information/logout`,{
+          fcmToken: token,
+         })
+        }
+        else if(userRole=='Teacher'){
+          axios.post(`${baseUrl}/api/staff/logout`,{
+            fcmToken: token,
+          })
+        }
+      localStorage.removeItem('token');
+      localStorage.removeItem('reg_no');
+      }
+      else{
       forceLogin();
+      }
     }
    
   }, []);
